@@ -1,0 +1,167 @@
+---
+title: "Guide for Git"
+author: "Ibtesam Ifaz"
+format: html
+---
+
+# Create a New Rstudio Project 
+
+Organizing work into a dedicated project makes life easier. It streamlines the collaboration process by helping users track changes and setting file paths more conveniently
+
+- In Rstudio, open File > New Project > New Directory/ Existing  
+- Name the project 
+- Set location 
+_ Create project 
+
+Now a clean working directory is set in .Rproj format 
+
+# Create a .qmd file and knit 
+
+A .qmd file is an advanced version of a mark down file which helps generate HTML and PDF versions of the working document. It helps to demonstrate code, visualize plotting with simple text, reference and e.t.c
+
+- Click File > New File > Quarto Document
+- Name the title and author 
+- Save it as example.qmd
+
+## Set YAML 
+
+At the top of the document you will find the YAML section, nested by "---". This helps you format the file in various ways. We want our file to render into an HTML, therefore we will copy and paste the below - 
+
+---
+title: "Example"
+format: html
+---
+
+Note - A hash(#) can be used at the beginning of a sentence/ word to make it a heading. Try: 
+
+- Writing a heading that says Introduction 
+- Followed by a line underneath that says *A line added for example* 
+
+## Knit the file using the Render button at top
+
+- The rendered HTML file should look like this 
+
+![](SS_qmd.png)
+
+
+# Initialize Git 
+
+Git is a version control system which helps users track files remotely so that its easier to collaborate. GitHub is the platform that helps users execute all the features of Git - quite similar to R and Rstudio as an example
+
+*Please note that you must login to your GitHub account to follow this step*
+
+## Open RStudio terminal
+
+![](SS_terminal.png)
+
+In Rstudio *Terminal* use the following commands 
+- git init *Git starts tracking this folder*
+- git add . *Files now staged*
+- git commit -m "Message" *File is now saved*
+
+## Create a repository in GitHub
+
+- Create a new remote repository
+![](SS_git1.png)
+
+- Name it, make it public and add a README
+
+![](SS_git2.png)
+
+- Copy the HTTPS Link
+
+![](SS_git3.png)
+
+## Use the repository link and follow the commands in the Terminal
+- git remote add origin *https://github.com/...*
+- git push -u origin main *or master depending on what the original branch is called in your device*
+
+Now the project is linked with a remote which will help us collaborate and use the features of the Git repository 
+
+# Create a new branch 
+
+Branches are used to safely experiment and develop features of the main project
+
+In Rstudio *Terminal* use the following commands to create a new branch *testbranch*
+- git branch testbranch *Creates a branch*
+- git switch testbranch *Switches to the new branch*
+
+## Make changes to example.qmd, commit and push
+
+Remember to use git push origin *testbranch* to push because these changes are being saved into the branch we just created. So what happens to main? It remains unchanged, which is why working in branches help you solve different problems without bothering your main project file
+
+## Add a new folder 
+In Rstudio *Terminal* use the following commands 
+- mkdir data
+- git add data/
+- git commit -m "Data folder added"
+
+*Ohh no! Did we just forget to add the files we needed in this folder? This is a quick fix!* 
+
+## Bring the files and amend the last commit 
+- Copy and paste a .csv file to the newly created data folder
+
+In Rstudio *Terminal* use the following commands 
+- git commit --amend
+
+This will open vim which helps you change the commit message you just amended 
+
+- Press 'i'  which takes you to insert mode
+- Change commit message ' Data folder and file added ' 
+- Press ' esc ' button and type ':wq' to save and exit 
+
+## Push 
+In Rstudio *Terminal* use the following commands 
+- git push --force 
+
+We are using force push because we are rewriting Git history 
+
+# Simulate a conflict on Main branch
+
+When collaborating, conflicts are a common scenario - this usually happens when two branches change the same part of a file. In this step we will demonstrate how to resolve such conflicts
+
+In Rstudio *Terminal* use the following commands 
+- git checkout main
+
+## Make changes to example.qmd
+- Type the following on the first line underneath the heading 
+
+*A line added for conflict*
+
+In Rstudio *Terminal* use the following commands 
+- git add example.qmd
+- git commit -m "Line added for conflict"
+- git push origin main 
+
+## Merge the branches and resolve conflict 
+
+In Rstudio *Terminal* use the following commands 
+
+- git merge testbranch
+
+## Now a conflict should emerge displaying the following 
+
+- Screenshot of conflict 
+
+## Manually resolve the conflict
+
+- Remove arrows and keep both lines
+
+In Rstudio *Terminal* use the following commands 
+
+- git add example.qmd
+- git commit -m "Conflict resolved by keeping both changes"
+- git push origin main 
+
+- Screenshot of resolved conflict
+- Screenshot of Github status of remote 
+
+# Create annotated tag v1.0
+
+Tagging is another tool to specifically identify a release version of your project e.g v1.0
+
+In Rstudio *Terminal* use the following commands 
+
+- git tag -a v.10 -m "First version"
+- git push origin v1.0
+
